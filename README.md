@@ -30,12 +30,12 @@ The project is intended for educational, experimental, and comparative analysis 
 
 ## 📂 Contents
 
-* `/firmware_dual` → ESP32 firmware for the dual nRF24L01 RF scanner.
-* `/firmware_single` → ESP32 firmware for the single nRF24L01 RF scanner.
-* `/processing_dual` → Processing 4 interface for the dual-radio version.
-* `/processing_single` → Processing 4 interface for the single-radio version.
-* `/matlab` → MATLAB code for CSV data visualization and analysis.
-* `/python` → Python code for CSV data visualization and analysis.
+- `/firmware_dual` → ESP32 firmware for the dual nRF24L01 RF scanner.
+- `/firmware_single` → ESP32 firmware for the single nRF24L01 RF scanner.
+- `/processing_dual` → Processing 4 interface for the dual-radio version.
+- `/processing_single` → Processing 4 interface for the single-radio version.
+- `/matlab` → MATLAB code for CSV data visualization and analysis.
+- `/python` → Python code for CSV data visualization and analysis.
 
 ## ✨ Main Features
 
@@ -61,7 +61,7 @@ The project is intended for educational, experimental, and comparative analysis 
 
 <p align="center">
   <img
-    src="docs/system_architecture.png"
+    src="https://github.com/user-attachments/assets/726f26ca-233a-40b3-8dfd-90985fecd20c"
     alt="ESP32 BLE and RF24 scanner system architecture"
     width="100%"
   >
@@ -73,8 +73,6 @@ The project is intended for educational, experimental, and comparative analysis 
     scanner using a single nRF24L01 module.
   </em>
 </p>
-
----
 
 ## 🖥️ Interface in Operation
 
