@@ -127,20 +127,46 @@ The interface includes:
 > The nRF24L01 must be powered from **3.3 V**. Do not connect its VCC pin directly to 5 V.
 
 
-## 🔌 nRF24L01 Connections
+## 🔌 Hardware Connections
 
-| nRF24L01 Pin |     ESP32 Pin |
-| ------------ | ------------: |
-| VCC          |         3.3 V |
-| GND          |           GND |
-| CE           |       GPIO 15 |
-| CSN          |        GPIO 5 |
-| SCK          |       GPIO 18 |
-| MISO         |       GPIO 19 |
-| MOSI         |       GPIO 23 |
-| IRQ          | Not connected |
+The project supports two hardware configurations:
 
-Place the 100 nF ceramic capacitor and the 10–47 µF electrolytic capacitor as close as possible to the nRF24L01 supply pins.
+- **Single nRF24L01+ PA/LNA version:** one module connected to the ESP32 VSPI bus.
+- **Dual nRF24L01+ PA/LNA version:** two modules connected through independent VSPI and HSPI buses.
+
+<p align="center">
+  <img
+    src="https://github.com/user-attachments/assets/a79ec446-4591-4a07-9d68-c9c12c32b288"
+    alt="ESP32 connection diagram for single and dual nRF24L01+ PA/LNA configurations"
+    width="100%"
+  >
+</p>
+
+<p align="center">
+  <em>
+    ESP32 wiring for the single and dual nRF24L01+ PA/LNA implementations.
+    The IRQ pins are optional and are not used by the current firmware.
+  </em>
+</p>
+
+### Connection Summary
+
+| Configuration | Module | SPI bus | CE | CSN | SCK | MISO | MOSI |
+|---|---|---|---:|---:|---:|---:|---:|
+| Single | nRF24L01+ | VSPI | GPIO 15 | GPIO 5 | GPIO 18 | GPIO 19 | GPIO 23 |
+| Dual | nRF24L01+ #1 | VSPI | GPIO 15 | GPIO 5 | GPIO 18 | GPIO 19 | GPIO 23 |
+| Dual | nRF24L01+ #2 | HSPI | GPIO 22 | GPIO 21 | GPIO 14 | GPIO 12 | GPIO 13 |
+
+> Both nRF24L01+ PA/LNA modules must be powered from **3.3 V**. Do not connect
+> the VCC pin to 5 V.
+
+> Place a decoupling capacitor close to each module. A **100 nF ceramic
+> capacitor in parallel with a 10–47 µF electrolytic capacitor** is recommended
+> between VCC and GND.
+
+> PA/LNA modules may produce relatively high current peaks. Use a stable 3.3 V
+> supply, keep the wiring short, and avoid placing the antennas close to metal
+> objects or directly beside each other.
 
 
 ## 📡 RF Scanning Range
