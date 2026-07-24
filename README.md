@@ -13,7 +13,6 @@
 
 </div>
 
----
 
 ## 📌 Overview
 
@@ -28,7 +27,15 @@ A Processing 4 desktop application displays the measurements in real time and ex
 
 The project is intended for educational, experimental, and comparative analysis of wireless activity in the 2.4 GHz ISM band.
 
----
+
+## 📂 Contents
+
+* `/firmware_dual` → ESP32 firmware for the dual nRF24L01 RF scanner.
+* `/firmware_single` → ESP32 firmware for the single nRF24L01 RF scanner.
+* `/processing_dual` → Processing 4 interface for the dual-radio version.
+* `/processing_single` → Processing 4 interface for the single-radio version.
+* `/matlab` → MATLAB code for CSV data visualization and analysis.
+* `/python` → Python code for CSV data visualization and analysis.
 
 ## ✨ Main Features
 
@@ -49,13 +56,99 @@ The project is intended for educational, experimental, and comparative analysis 
 * Compact Processing 4 graphical interface.
 * Fixed interface size to prevent rendering problems during resizing.
 
----
 
 ## 🧩 System Architecture
 
 <p align="center">
-  <img src="docs/system_architecture.png", alt="ESP32 BLE and RF24 scanner system architecture", width="100%">
+  <img
+    src="docs/system_architecture.png"
+    alt="ESP32 BLE and RF24 scanner system architecture"
+    width="100%"
+  >
 </p>
+
+<p align="center">
+  <em>
+    System architecture of the ESP32-based BLE and 2.4 GHz RF activity
+    scanner using a single nRF24L01 module.
+  </em>
+</p>
+
+---
+
+## 🖥️ Interface in Operation
+
+The Processing 4 application provides real-time visualization of the relative
+RF-energy detection spectrum, RF activity history, nearby Bluetooth Low Energy
+devices, and BLE RSSI measurements.
+
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img
+        src="docs/interface_rf_view.png"
+        alt="Processing 4 interface showing the RF spectrum and RF activity history"
+        width="100%"
+      >
+      <br>
+      <strong>RF spectrum and activity history</strong>
+      <br>
+      <sub>
+        Relative RF-energy detection from 2402 MHz to 2480 MHz using a
+        sequential scan with one nRF24L01 module.
+      </sub>
+    </td>
+    <td align="center" width="50%">
+      <img
+        src="docs/interface_ble_view.png"
+        alt="Processing 4 interface showing BLE devices and RSSI measurements"
+        width="100%"
+      >
+      <br>
+      <strong>BLE devices and RSSI monitoring</strong>
+      <br>
+      <sub>
+        Bluetooth Low Energy device identification, protected addresses,
+        received signal strength, and temporal RSSI visualization.
+      </sub>
+    </td>
+  </tr>
+</table>
+
+### Complete Interface View
+
+<p align="center">
+  <img
+    src="docs/interface_complete_view.png"
+    alt="Complete Processing 4 interface for the ESP32 BLE and RF24 scanner"
+    width="95%"
+  >
+</p>
+
+<p align="center">
+  <em>
+    Complete view of the Processing 4 desktop application during a
+    measurement session.
+  </em>
+</p>
+
+The interface includes:
+
+* Real-time relative RF-energy detection.
+* Sequential frequency scanning from 2402 MHz to 2480 MHz.
+* RF activity history visualization.
+* Bluetooth Low Energy device detection.
+* BLE RSSI monitoring over an adjustable time interval.
+* Protected BLE address visualization.
+* Automatic RF graph scaling.
+* CSV data recording.
+* Serial-port selection and connection controls.
+
+> The RF spectrum displays the percentage of observation windows in which
+> the nRF24L01 detected energy above its internal RPD/CD threshold. It does
+> not represent calibrated RF power in dBm.
+
+---
 
 ## 🔧 Hardware
 
@@ -72,7 +165,6 @@ The project is intended for educational, experimental, and comparative analysis 
 
 > The nRF24L01 must be powered from **3.3 V**. Do not connect its VCC pin directly to 5 V.
 
----
 
 ## 🔌 nRF24L01 Connections
 
@@ -89,7 +181,6 @@ The project is intended for educational, experimental, and comparative analysis 
 
 Place the 100 nF ceramic capacitor and the 10–47 µF electrolytic capacitor as close as possible to the nRF24L01 supply pins.
 
----
 
 ## 📡 RF Scanning Range
 
@@ -111,8 +202,6 @@ The firmware scans:
 A single nRF24L01 sequentially scans all 79 frequencies.
 
 Unlike the previous dual-radio implementation, this version does not divide the spectrum between VSPI and HSPI devices.
-
----
 
 ## 📊 Relative RF Energy Detection
 
@@ -166,8 +255,6 @@ It does **not** represent:
 * Packet-decoding success.
 * A distinction between Wi-Fi, Bluetooth, nRF24L01, or other 2.4 GHz transmitters.
 
----
-
 ## 📈 RF Filtering
 
 The firmware applies asymmetric filtering to improve the visual response:
@@ -213,8 +300,6 @@ It is not:
 
 The minimum nonzero raw measurement is approximately 4.17% because the firmware performs 24 observations per frequency.
 
----
-
 ## 📶 Bluetooth Low Energy Monitoring
 
 Bluetooth Low Energy scanning is performed directly by the ESP32 BLE subsystem.
@@ -238,8 +323,6 @@ The BLE advertising channels are:
 |          39 |         2480 MHz |
 
 The high-level ESP32 BLE scan does not directly report which advertising channel was used for each received packet. Therefore, the interface displays all three possible BLE advertising channels.
-
----
 
 ## 🔐 BLE Address Privacy
 
@@ -326,7 +409,6 @@ Displays:
 | `C` | Clear BLE devices and RSSI history |
 | `H` | Clear the RF history map           |
 
----
 
 ## 📨 Serial Protocol
 
@@ -425,40 +507,6 @@ nRF24L01
 ```
 
 for RF measurements generated by the single-radio firmware.
-
----
-
-## 📂 Repository Structure
-
-```text
-ESP32_BLE_RF24_Scanner/
-│
-├── firmware/
-│   └── Scanner_BLE_RF24_Single_ESP32_v1.ino
-│
-├── processing/
-│   └── Scanner_BLE_RF24_Single_Processing4_v1.pde
-│
-├── analysis/
-│   ├── matlab/
-│   │   └── leer_scanner_ble_rf24_single.m
-│   │
-│   └── python/
-│       └── leer_scanner_ble_rf24_single.py
-│
-├── data/
-│   └── example_measurement.csv
-│
-├── docs/
-│   ├── connection_diagram.png
-│   ├── interface_screenshot.png
-│   └── system_architecture.png
-│
-├── LICENSE
-└── README.md
-```
-
----
 
 ## 📦 Software Requirements
 
@@ -658,75 +706,6 @@ This platform can be used to demonstrate:
 
 ---
 
-## 🔬 Suggested Experiments
-
-1. Compare the RF activity with and without a nearby Wi-Fi transmission.
-2. Observe the BLE advertising frequencies at 2402, 2426, and 2480 MHz.
-3. Move a BLE device away from the ESP32 and analyze its RSSI.
-4. Rotate the BLE device and observe antenna-orientation effects.
-5. Compare raw and filtered RF detection.
-6. Modify the number of observations per channel.
-7. Compare different attack and decay coefficients.
-8. Compare scan performance using 1 Mbps and 2 Mbps RF24 data-rate settings.
-9. Record a controlled transmission and analyze it in MATLAB or Python.
-10. Compare the single-radio implementation with a dual-radio implementation.
-
----
-
-## 🛠️ Suggested Future Improvements
-
-* Add configurable RF observation-window parameters.
-* Add automatic CSV filenames with timestamps.
-* Add metadata describing the measurement configuration.
-* Add a real-time raw-versus-filtered view.
-* Add selectable RF frequency ranges.
-* Add a configurable number of samples per channel.
-* Add calibration experiments using a known RF source.
-* Add SDR-based validation.
-* Add Wi-Fi channel overlays.
-* Add a frequency-selection tool for temporal analysis.
-* Export figures automatically from Processing.
-* Add a measurement-session configuration file.
-* Add a portable PCB version.
-* Add an enclosure for field measurements.
-
----
-
-## 📖 Suggested Citation
-
-```bibtex
-@software{castro_esp32_ble_rf24_scanner_2026,
-  author  = {Castro Lagos, Cristian Andrés},
-  title   = {ESP32 BLE and 2.4 GHz RF Activity Scanner Using a Single nRF24L01},
-  year    = {2026},
-  url     = {https://github.com/CrissCCL/ESP32_BLE_RF24_Scanner},
-  note    = {Firmware, Processing interface, and MATLAB/Python analysis tools}
-}
-```
-
----
-
-## 👤 Author
-
-**Cristian Andrés Castro Lagos — CrissCCL**
-
-Electronics engineer working on embedded systems, instrumentation, digital signal processing, automation, and control systems.
-
-* Portfolio: https://crissccl.github.io
-* GitHub: https://github.com/CrissCCL
-* LinkedIn: https://www.linkedin.com/in/cristianccl
-* YouTube: https://www.youtube.com/@CrissCCL_eng
-
----
-
-## 📄 License
-
-This project is released under the MIT License.
-
-See the [LICENSE](LICENSE) file for details.
-
----
-
 ## ⚠️ Disclaimer
 
 This repository is intended for educational, research, and experimental use.
@@ -735,12 +714,13 @@ The system passively observes BLE advertisements and relative RF energy. It is n
 
 Users are responsible for complying with applicable privacy, telecommunications, and data-protection regulations.
 
----
 
-<div align="center">
 
-### © CrissCCL 2026
+## 🤝 Support projects
+ Support me on Patreon [https://www.patreon.com/c/CrissCCL](https://www.patreon.com/c/CrissCCL)
 
-Embedded systems, signal processing, instrumentation, and control.
+## 📜 License
+MIT License
 
-</div>
+
+
