@@ -82,11 +82,12 @@ devices, and BLE RSSI measurements.
 
 <p align="center">
   <img
-    src="docs/interface_in_operation.png"
+    src="https://github.com/user-attachments/assets/8c2501c5-b0fb-4424-8edf-837547878d8d"
     alt="Processing 4 interface for the ESP32 BLE and RF24 activity scanner during a measurement session"
     width="95%"
   >
 </p>
+
 
 <p align="center">
   <em>
