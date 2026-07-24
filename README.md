@@ -63,7 +63,7 @@ The project is intended for educational, experimental, and comparative analysis 
   <img
     src="https://github.com/user-attachments/assets/726f26ca-233a-40b3-8dfd-90985fecd20c"
     alt="ESP32 BLE and RF24 scanner system architecture"
-    width="100%"
+    width="90%"
   >
 </p>
 
