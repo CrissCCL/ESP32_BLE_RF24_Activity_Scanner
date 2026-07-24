@@ -138,7 +138,7 @@ The project supports two hardware configurations:
   <img
     src="https://github.com/user-attachments/assets/a79ec446-4591-4a07-9d68-c9c12c32b288"
     alt="ESP32 connection diagram for single and dual nRF24L01+ PA/LNA configurations"
-    width="100%"
+    width="60%"
   >
 </p>
 
