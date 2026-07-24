@@ -80,73 +80,36 @@ The Processing 4 application provides real-time visualization of the relative
 RF-energy detection spectrum, RF activity history, nearby Bluetooth Low Energy
 devices, and BLE RSSI measurements.
 
-<table>
-  <tr>
-    <td align="center" width="50%">
-      <img
-        src="docs/interface_rf_view.png"
-        alt="Processing 4 interface showing the RF spectrum and RF activity history"
-        width="100%"
-      >
-      <br>
-      <strong>RF spectrum and activity history</strong>
-      <br>
-      <sub>
-        Relative RF-energy detection from 2402 MHz to 2480 MHz using a
-        sequential scan with one nRF24L01 module.
-      </sub>
-    </td>
-    <td align="center" width="50%">
-      <img
-        src="docs/interface_ble_view.png"
-        alt="Processing 4 interface showing BLE devices and RSSI measurements"
-        width="100%"
-      >
-      <br>
-      <strong>BLE devices and RSSI monitoring</strong>
-      <br>
-      <sub>
-        Bluetooth Low Energy device identification, protected addresses,
-        received signal strength, and temporal RSSI visualization.
-      </sub>
-    </td>
-  </tr>
-</table>
-
-### Complete Interface View
-
 <p align="center">
   <img
-    src="docs/interface_complete_view.png"
-    alt="Complete Processing 4 interface for the ESP32 BLE and RF24 scanner"
+    src="docs/interface_in_operation.png"
+    alt="Processing 4 interface for the ESP32 BLE and RF24 activity scanner during a measurement session"
     width="95%"
   >
 </p>
 
 <p align="center">
   <em>
-    Complete view of the Processing 4 desktop application during a
-    measurement session.
+    Processing 4 interface during a measurement session, showing the relative
+    RF-energy spectrum, RF activity history, BLE device table, and RSSI
+    measurements.
   </em>
 </p>
 
 The interface includes:
 
-* Real-time relative RF-energy detection.
-* Sequential frequency scanning from 2402 MHz to 2480 MHz.
-* RF activity history visualization.
-* Bluetooth Low Energy device detection.
-* BLE RSSI monitoring over an adjustable time interval.
-* Protected BLE address visualization.
-* Automatic RF graph scaling.
-* CSV data recording.
-* Serial-port selection and connection controls.
+- Relative RF-energy detection from 2402 MHz to 2480 MHz.
+- RF activity history visualization.
+- Bluetooth Low Energy device detection.
+- BLE RSSI monitoring over time.
+- Protected BLE address display.
+- Automatic RF graph scaling.
+- Serial-port selection and connection controls.
+- CSV data recording.
 
-> The RF spectrum displays the percentage of observation windows in which
+> The RF spectrum represents the percentage of observation windows in which
 > the nRF24L01 detected energy above its internal RPD/CD threshold. It does
-> not represent calibrated RF power in dBm.
-
----
+> not represent calibrated RF power or RSSI in dBm.
 
 ## 🔧 Hardware
 
