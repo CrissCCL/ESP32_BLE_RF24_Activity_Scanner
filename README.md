@@ -53,43 +53,9 @@ The project is intended for educational, experimental, and comparative analysis 
 
 ## 🧩 System Architecture
 
-```text
-                         ┌──────────────────────────────┐
-                         │            ESP32             │
-                         │                              │
-BLE devices ───────────► │  Integrated BLE receiver    │
-                         │  - Device discovery          │
-                         │  - Identification            │
-                         │  - RSSI measurement           │
-                         │                              │
-2.4 GHz RF signals ────► │  Single nRF24L01 receiver   │
-                         │  - Sequential channel scan   │
-                         │  - RPD/CD energy detection   │
-                         └──────────────┬───────────────┘
-                                        │
-                                        │ USB Serial
-                                        ▼
-                         ┌──────────────────────────────┐
-                         │      Processing 4 GUI        │
-                         │                              │
-                         │  - RF detection spectrum     │
-                         │  - RF history map            │
-                         │  - BLE RSSI graph            │
-                         │  - BLE device table          │
-                         │  - CSV recording             │
-                         └──────────────┬───────────────┘
-                                        │
-                                        │ CSV
-                          ┌─────────────┴─────────────┐
-                          ▼                           ▼
-                 ┌────────────────┐          ┌────────────────┐
-                 │     MATLAB     │          │     Python     │
-                 │ Offline plots  │          │ Offline plots  │
-                 │ and summaries  │          │ and summaries  │
-                 └────────────────┘          └────────────────┘
-```
-
----
+<p align="center">
+  <img src="docs/system_architecture.png", alt="ESP32 BLE and RF24 scanner system architecture", width="100%">
+</p>
 
 ## 🔧 Hardware
 
