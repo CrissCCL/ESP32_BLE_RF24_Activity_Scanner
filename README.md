@@ -30,8 +30,8 @@ The project is intended for educational, experimental, and comparative analysis 
 
 ## 📂 Contents
 
-- `/firmware_dual` → Code for ESP32 (Arduino environment) for the dual nRF24L01 RF scanner.
-- `/firmware_single` → Code for ESP32 (Arduino environment) for the single nRF24L01 RF scanner.
+- `/code_dual` → Code for ESP32 (Arduino environment) for the dual nRF24L01 RF scanner.
+- `/code_single` → Code for ESP32 (Arduino environment) for the single nRF24L01 RF scanner.
 - `/processing_dual` → Processing 4 interface for the dual-radio version.
 - `/processing_single` → Processing 4 interface for the single-radio version.
 - `/matlab` → MATLAB code for CSV data visualization and analysis.
