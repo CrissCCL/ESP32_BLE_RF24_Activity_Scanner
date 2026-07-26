@@ -533,23 +533,33 @@ pip install pandas matplotlib
   * `writetable`
   * standard plotting functions
 
+---
 
 ## 🚀 Uploading the Code for ESP32 (Arduino environment)
 
 1. Install the ESP32 board package in Arduino IDE.
 2. Install the `RF24` library by TMRh20.
 3. Connect the nRF24L01 according to the wiring table.
-4. Open:
+4. Open the code that corresponds to your hardware configuration:
 
-```text
-firmware/Scanner_BLE_RF24_Single_ESP32_v1.ino
-```
+   **Single nRF24L01 version**
+
+   ```text
+   code_single/code_single.ino
+   ```
+
+   **Dual nRF24L01 version**
+
+   ```text
+   code_dual/code_dual.ino
+   ```
 
 5. Select the correct ESP32 board.
 6. Select the correct serial port.
 7. Compile and upload the code to the ESP32.
 8. Close the Arduino Serial Monitor before opening the Processing interface.
 
+---
 
 ## ⚡ Installing a Precompiled Firmware Image
 
@@ -620,6 +630,7 @@ manual step.
 After restarting the board, open the Processing interface, select the same COM
 port, and verify that RF and BLE measurements are received correctly.
 
+---
 
 ## ▶️ Running the Processing Interface
 
@@ -640,6 +651,7 @@ processing/Scanner_BLE_RF24_Single_Processing4_v1.pde
 10. Select the destination filename.
 11. Press `GUARDAR CSV` to close the recording correctly.
 
+---
 
 ## 🧪 Experimental Testing with Airwave Lab
 
@@ -793,8 +805,13 @@ The system passively observes BLE advertisements and relative RF energy. It is n
 
 Users are responsible for complying with applicable privacy, telecommunications, and data-protection regulations.
 
+
+
 ## 🤝 Support projects
  Support me on Patreon [https://www.patreon.com/c/CrissCCL](https://www.patreon.com/c/CrissCCL)
 
 ## 📜 License
 MIT License
+
+
+
