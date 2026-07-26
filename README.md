@@ -36,6 +36,7 @@ The project is intended for educational, experimental, and comparative analysis 
 - `/processing_single` → Processing 4 interface for the single-radio version.
 - `/matlab` → MATLAB code for CSV data visualization and analysis.
 - `/python` → Python code for CSV data visualization and analysis.
+- `/binaries` → Precompiled firmware images for compatible ESP32 boards.
 
 ## ✨ Main Features
 
@@ -342,7 +343,6 @@ EXPORT_FULL_BLE_ADDRESS = false
 
 The complete address may be retained locally for controlled laboratory analysis, but public files should normally use protected addresses.
 
----
 
 ## 🖥️ Processing 4 Interface
 
@@ -450,7 +450,6 @@ Example:
 STATUS,nRF24L01 connected; RPD detector
 ```
 
----
 
 ## 💾 CSV Format
 
@@ -532,8 +531,6 @@ pip install pandas matplotlib
   * `writetable`
   * standard plotting functions
 
----
-
 ## 🚀 Firmware Installation
 
 1. Install the ESP32 board package in Arduino IDE.
@@ -550,7 +547,80 @@ firmware/Scanner_BLE_RF24_Single_ESP32_v1.ino
 7. Compile and upload the firmware.
 8. Close the Arduino Serial Monitor before opening the Processing interface.
 
----
+## ⚡ Installing a Precompiled Firmware Image
+
+Compiling the project is not required if you use one of the complete firmware
+images available in the `/binaries` directory. This option is useful when you
+want a faster installation or when the Arduino IDE reports compilation or
+library-related errors.
+
+> Select the firmware image that matches your hardware configuration. The file
+> used with this procedure must be a **complete merged image** and must be
+> flashed at address `0x0`. A standard Arduino application `.bin` file is not a
+> replacement for the merged image.
+
+### 1. Install the Flashing Utility
+
+1. Download and extract the
+   [Espressif Flash Download Tools](https://www.espressif.com/en/support/download/other-tools).
+2. Connect the ESP32 to the computer with a data-capable USB cable.
+3. Verify that the board appears as a serial port in Windows.
+4. If no COM port is detected, install the driver required by the USB-to-UART
+   interface used on your board. Boards based on the CP2102 or CP2104 can use
+   the [Silicon Labs CP210x VCP driver](https://www.silabs.com/software-and-tools/usb-to-uart-bridge-vcp-drivers).
+5. Close the Arduino Serial Monitor, Processing, and any other program using the
+   ESP32 serial port.
+
+### 2. Select the Firmware Image
+
+Download the appropriate merged `.bin` file from the `/binaries` directory:
+
+* Use the **single-radio** image for the version with one nRF24L01 module.
+* Use the **dual-radio** image for the version with two nRF24L01 modules.
+
+### 3. Configure the ESP32 Flash Download Tool
+
+1. Start the Flash Download Tool.
+
+2. Select the following startup options:
+
+   ```text
+   ChipType: ESP32
+   WorkMode: Develop
+   LoadMode: UART
+   ```
+
+3. In **Download Path Config**, select the merged `.bin` file and enable its
+   checkbox.
+
+4. Set the download address to:
+
+   ```text
+   0x0
+   ```
+
+5. Select the COM port assigned to the ESP32.
+
+6. Set the baud rate to `115200` for a reliable initial upload.
+
+7. Leave the remaining SPI flash options at their default values unless your
+   board requires a different configuration.
+
+8. Click **START** to write the firmware.
+
+### 4. Start the Firmware
+
+Wait until the tool reports that the download has completed successfully. Then
+press the ESP32 **EN/RESET** button or disconnect and reconnect the USB cable.
+
+If the tool remains at `Connecting...`, hold the **BOOT** button while starting
+the download and release it as soon as the writing process begins. Many ESP32
+development boards enter download mode automatically and do not require this
+manual step.
+
+After restarting the board, open the Processing interface, select the same COM
+port, and verify that RF and BLE measurements are received correctly.
+
 
 ## ▶️ Running the Processing Interface
 
@@ -571,7 +641,27 @@ processing/Scanner_BLE_RF24_Single_Processing4_v1.pde
 10. Select the destination filename.
 11. Press `GUARDAR CSV` to close the recording correctly.
 
----
+
+## 🧪 Experimental Testing with Airwave Lab
+
+The scanner can be used as a monitoring and visualization platform during
+controlled Bluetooth, BLE, and 2.4 GHz RF experiments.
+
+Additional information about the experimental hardware, laboratory validation,
+spectrum-analyzer measurements, and controlled test methodology is available
+in the following repository:
+
+[Airwave Lab — Bluetooth, BLE and RF Research Toolkit](https://github.com/CrissCCL/Airwave_Lab)
+
+Airwave Lab complements this project by providing a documented experimental
+environment for evaluating how RF activity appears in the scanner interface.
+It can be used to compare the detected frequency activity, the RF history map,
+and changes in BLE RSSI under different controlled test conditions.
+
+> Perform RF experiments only with equipment you own or are authorized to test.
+> Any active RF test must be conducted in an isolated or shielded environment
+> and in accordance with applicable telecommunications regulations.
+
 
 ## 🐍 Python Analysis
 
@@ -597,7 +687,6 @@ FRECUENCIA_PREFERIDA_MHZ = 2426
 
 When this frequency is unavailable, the script automatically selects the frequency with the highest mean filtered detection.
 
----
 
 ## 📐 MATLAB Analysis
 
@@ -621,7 +710,6 @@ The default temporal-analysis frequency is:
 frecuenciaPreferidaMHz = 2426;
 ```
 
----
 
 ## 📊 Typical Result Interpretation
 
@@ -657,7 +745,6 @@ The raw signal changes in discrete increments of approximately 4.17%.
 
 The filtered signal provides a smoother visualization but should not be interpreted as increased physical measurement resolution.
 
----
 
 ## ⚠️ Technical Limitations
 
@@ -692,7 +779,6 @@ This platform can be used to demonstrate:
 * Comparison between online and offline data analysis.
 * The difference between energy detection and calibrated power measurement.
 
----
 
 ## ⚠️ Disclaimer
 
@@ -701,7 +787,6 @@ This repository is intended for educational, research, and experimental use.
 The system passively observes BLE advertisements and relative RF energy. It is not intended for unauthorized access, communication interception, device tracking, or interference with wireless systems.
 
 Users are responsible for complying with applicable privacy, telecommunications, and data-protection regulations.
-
 
 
 ## 🤝 Support projects
