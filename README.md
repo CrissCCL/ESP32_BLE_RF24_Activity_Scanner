@@ -131,7 +131,7 @@ devices, and BLE RSSI measurements.
   <img
     src="https://github.com/user-attachments/assets/8c2501c5-b0fb-4424-8edf-837547878d8d"
     alt="Processing 4 interface for the ESP32 BLE and RF24 activity scanner during a measurement session"
-    width="95%"
+    width="80%"
   >
 </p>
 
@@ -186,7 +186,7 @@ The project supports two hardware configurations:
   <img
     src="https://github.com/user-attachments/assets/a79ec446-4591-4a07-9d68-c9c12c32b288"
     alt="ESP32 connection diagram for single and dual nRF24L01+ PA/LNA configurations"
-    width="60%"
+    width="50%"
   >
 </p>
 
