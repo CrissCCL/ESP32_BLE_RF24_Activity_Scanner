@@ -2,7 +2,7 @@
 
 # ESP32 BLE and 2.4 GHz RF Activity Scanner
 
-### Bluetooth Low Energy monitoring and relative RF energy detection using an ESP32 and a single nRF24L01 module
+### Bluetooth Low Energy monitoring and relative RF-energy detection using an ESP32 with single and dual nRF24L01 configurations
 
 [![Platform](https://img.shields.io/badge/Platform-ESP32-blue.svg)](https://www.espressif.com/en/products/socs/esp32)
 [![Arduino](https://img.shields.io/badge/Framework-Arduino-00979D.svg)](https://www.arduino.cc/)
@@ -16,7 +16,7 @@
 
 ## 📌 Overview
 
-This repository contains a compact 2.4 GHz monitoring platform based on an ESP32 and a single nRF24L01 transceiver.
+This repository contains a compact 2.4 GHz monitoring platform based on anESP32 and external nRF24L01 transceivers. The project supports both single-radio and dual-radio RF scanning configurations.
 
 The system combines two complementary measurements:
 
@@ -43,7 +43,11 @@ The project is intended for educational, experimental, and comparative analysis 
 * Bluetooth Low Energy device discovery.
 * BLE RSSI monitoring over time.
 * Sequential RF scanning from 2402 MHz to 2480 MHz.
-* One nRF24L01 module connected through the ESP32 VSPI bus.
+* Single-radio configuration using one nRF24L01 connected through VSPI.
+* Dual-radio configuration using two nRF24L01 modules connected through
+  independent VSPI and HSPI buses.
+* BLE scanning through the integrated ESP32 Bluetooth receiver and antenna.
+* Time-multiplexed BLE and RF acquisition.
 * Relative energy-detection percentage for each RF channel.
 * Raw and filtered RF measurements.
 * Automatic RF graph scaling.
@@ -60,20 +64,62 @@ The project is intended for educational, experimental, and comparative analysis 
 
 ## 🧩 System Architecture
 
+The platform combines two independent 2.4 GHz receiver paths:
+
+1. The integrated ESP32 Bluetooth Low Energy radio performs BLE device
+   discovery, identification, and RSSI measurement through the ESP32 antenna.
+2. The external nRF24L01 receiver or receivers perform relative RF-energy
+   detection through their own antennas.
+
+The ESP32 firmware coordinates both acquisition processes, filters the RF
+measurements, formats the serial messages, and transfers the results to the
+Processing 4 interface.
+
 <p align="center">
   <img
-    src="https://github.com/user-attachments/assets/726f26ca-233a-40b3-8dfd-90985fecd20c"
-    alt="ESP32 BLE and RF24 scanner system architecture"
-    width="90%"
+    src="https://github.com/user-attachments/assets/f49b2990-18d0-4137-9938-274129eff6bb"
+    alt="System architecture of the ESP32 BLE and RF24 activity scanner"
+    width="95%"
   >
 </p>
 
 <p align="center">
   <em>
-    System architecture of the ESP32-based BLE and 2.4 GHz RF activity
-    scanner using a single nRF24L01 module.
+    Architecture of the ESP32-based BLE and 2.4 GHz RF activity scanner,
+    supporting single and dual nRF24L01 configurations.
   </em>
 </p>
+
+### Receiver and Acquisition Scheduling
+
+The BLE receiver and the firmware controller are part of the same ESP32
+development board. The BLE data path is therefore internal to the ESP32 and
+does not use the nRF24L01 modules.
+
+The antenna configuration is:
+
+| Configuration | ESP32 BLE antenna | nRF24L01 antennas | Total |
+|---|---:|---:|---:|
+| Single | 1 | 1 | 2 |
+| Dual | 1 | 2 | 3 |
+
+The receivers do not perform all measurements continuously at the same time.
+The firmware alternates between RF sweeps and BLE scanning:
+
+- **Single version:** two complete RF sweeps followed by a one-second BLE scan.
+- **Dual version:** four dual RF sweeps followed by a one-second BLE scan.
+
+During each dual RF measurement window, both nRF24L01 receivers observe their
+assigned frequency channels simultaneously. BLE scanning begins only after the
+configured number of RF sweeps has been completed.
+
+This scheduling reduces the possibility that transmissions produced during
+the ESP32 active BLE scan are interpreted by the nRF24L01 receivers as
+external RF activity.
+
+> BLE RSSI is measured by the integrated ESP32 Bluetooth receiver. The
+> nRF24L01 provides relative binary RF-energy detection and does not provide
+> calibrated received power or RSSI in dBm.
 
 ## 🖥️ Interface in Operation
 
@@ -120,9 +166,9 @@ The interface includes:
 | Component                       | Quantity | Description                     |
 | ------------------------------- | -------: | ------------------------------- |
 | ESP32 development board         |        1 | Main controller and BLE scanner |
-| nRF24L01 or nRF24L01+           |        1 | Relative RF energy detector     |
-| 100 nF ceramic capacitor        |        1 | Local high-frequency decoupling |
-| 10–47 µF electrolytic capacitor |        1 | nRF24L01 supply stabilization   |
+| nRF24L01 or nRF24L01+ | 1–2 | Relative RF-energy detection receivers |
+| 100 nF ceramic capacitor        | 1–2 | One capacitor per nRF24L01 module |
+| 10–47 µF electrolytic capacitor | 1–2 | One capacitor per nRF24L01 module |
 | USB cable                       |        1 | Power and serial communication  |
 | Breadboard or PCB               |        1 | Hardware assembly               |
 
@@ -188,9 +234,17 @@ The code for ESP32 (Arduino environment) scans:
 |              ... |       ... |
 |               80 |  2480 MHz |
 
-A single nRF24L01 sequentially scans all 79 frequencies.
+The single version uses one nRF24L01 to sequentially scan all 79 frequencies.
 
-Unlike the previous dual-radio implementation, this version does not divide the spectrum between VSPI and HSPI devices.
+The dual version divides the scan between two nRF24L01 receivers:
+
+| Receiver | SPI bus | Channels | Frequency range |
+|---|---|---:|---:|
+| nRF24L01 #1 | VSPI | 2–41 | 2402–2441 MHz |
+| nRF24L01 #2 | HSPI | 42–80 | 2442–2480 MHz |
+
+The two receivers in the dual version observe one channel from each assigned
+range during the same RF measurement window.
 
 ## 📊 Relative RF Energy Detection
 
