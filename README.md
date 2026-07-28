@@ -37,7 +37,6 @@ The project is intended for educational, experimental, and comparative analysis 
 - `/processing_single` → Processing 4 interface for the single-radio version.
 - `/matlab` → MATLAB code for CSV data visualization and analysis.
 - `/python` → Python code for CSV data visualization and analysis.
-- `/binaries` → Precompiled firmware images for compatible ESP32 boards.
 
 ## ✨ Main Features
 
