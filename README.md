@@ -50,7 +50,7 @@ The project is intended for educational, experimental, and comparative analysis 
 * Time-multiplexed BLE and RF acquisition.
 * Relative energy-detection percentage for each RF channel.
 * Raw and filtered RF measurements.
-* Automatic RF graph scaling.
+* Fixed 0–100% RF graph scale.
 * RF activity history map.
 * Adjustable BLE RSSI time window.
 * Adjustable RSSI vertical limits.
@@ -151,7 +151,7 @@ The interface includes:
 - Bluetooth Low Energy device detection.
 - BLE RSSI monitoring over time.
 - Protected BLE address display.
-- Automatic RF graph scaling.
+- Fixed 0–100% RF graph scale.
 - Serial-port selection and connection controls.
 - CSV data recording.
 
@@ -321,25 +321,18 @@ The lower decay coefficient makes the displayed activity decrease more gradually
 
 ---
 
-## 📏 Automatic RF Scale
+## 📏 Fixed RF Scale
 
-The Processing interface automatically selects one of the following vertical ranges:
+The Processing interfaces use a fixed vertical range from **0% to 100%** for relative RF-energy detection.
 
-```text
-0–5 %
-0–10 %
-0–20 %
-0–50 %
-0–100 %
-```
+Using the same scale in every measurement makes visual comparisons between different sessions and hardware configurations more consistent.
 
-The 5% value is only the minimum upper limit of the displayed graph.
-
-It is not:
+The displayed scale is only a graphical range. It is not:
 
 * An RF detection threshold.
-* A minimum measured activity.
-* A fixed channel-occupancy value.
+* Calibrated received power.
+* RSSI in dBm.
+* Exact channel-utilization time.
 
 The minimum nonzero raw measurement is approximately 4.17% because the code for ESP32 (Arduino environment) performs 24 observations per frequency.
 
@@ -829,13 +822,8 @@ The system passively observes BLE advertisements and relative RF energy. It is n
 
 Users are responsible for complying with applicable privacy, telecommunications, and data-protection regulations.
 
-
-
 ## 🤝 Support projects
  Support me on Patreon [https://www.patreon.com/c/CrissCCL](https://www.patreon.com/c/CrissCCL)
 
 ## 📜 License
 MIT License
-
-
-
